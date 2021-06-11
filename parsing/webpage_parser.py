@@ -1,6 +1,7 @@
 import io
 import json
 import logging
+from typing import List
 import regex as re
 from urllib.parse import urlparse
 
@@ -32,7 +33,7 @@ def valid_address(user_input: str) -> bool:
         return False
 
 
-def word_tokenize(text: str) -> list[str]:
+def word_tokenize(text: str) -> List[str]:
     """Tokenizes text into words. Keeps full stops with abbreviations, won't recognize apostrophes other than ' ."""
 
     words = re.compile(r"\b(?:Mr|Ms|Mrs|vs|etc|Dr|Prof|Rev|Pres|Inc|Est|Dept|St|Blvd)\."  # common abbreviations
@@ -137,7 +138,7 @@ def _parse_text(article: Article) -> str:
     return text.strip()
 
 
-def _extract_authors(html: str) -> list[str]:
+def _extract_authors(html: str) -> List[str]:
     """Extracts web article author(s) for specific html site structures."""
 
     authors = []

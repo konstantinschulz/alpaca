@@ -1,3 +1,6 @@
+from typing import List
+
+
 class WebpageData:
     """Holds parsed webpage information.
 
@@ -14,10 +17,10 @@ class WebpageData:
                  html: str = "",
                  headline: str = "",
                  text: str = "",
-                 authors: list[str] = [],
+                 authors: List[str] = [],
                  url: str = "",
-                 text_sentences: list[str] = None,
-                 text_words: list[str] = None):
+                 text_sentences: List[str] = None,
+                 text_words: List[str] = None):
         self.html = html
         self.headline = headline
         self.text = text

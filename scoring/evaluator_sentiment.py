@@ -2,6 +2,7 @@ import io
 import logging
 from contextlib import redirect_stderr
 from pathlib import Path
+from typing import List
 
 import fasttext
 import numpy as np
@@ -138,7 +139,7 @@ def evaluate_subjectivity(data: WebpageData) -> float:
     return 1 - subjectivity
 
 
-def _sentiment_analyser(texts: list[str]) -> np.array([float, ...]):
+def _sentiment_analyser(texts: List[str]) -> np.array([float, ...]):
     """Sentiment analyser by Prashanth Rao https://github.com/prrao87/fine-grained-sentiment-app
 
     :return: Sentiment analysis of the input texts, classifying each into 5 groups from 0 (very negative) to 5

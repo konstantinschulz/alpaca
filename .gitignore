@@ -1,5 +1,6 @@
 # project folders
 .idea/
+.vscode/
 venv/
 
 # build files
