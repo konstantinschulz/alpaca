@@ -1,0 +1,6 @@
+version: '3.7'
+
+services:
+  credibility:
+    build: .
+    command: python main.py

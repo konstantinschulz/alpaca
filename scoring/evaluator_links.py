@@ -26,7 +26,7 @@ def evaluate_links_external(data: WebpageData) -> float:
     :return: 1 for high and 0 for low usage of external links."""
 
     local_domain = urlparse(data.url).hostname
-    if local_domain.startswith("www."):
+    if local_domain and local_domain.startswith("www."):
         local_domain = local_domain[4:]
 
     soup = BeautifulSoup(data.html, "html.parser")
