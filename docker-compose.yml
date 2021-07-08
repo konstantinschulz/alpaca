@@ -1,6 +1,8 @@
 version: '3.7'
 
 services:
-  credibility:
+  alpaca:
     build: .
-    command: python main.py
+    image: konstantinschulz/credibility-score-service:v2
+#    ports:
+#      - 8000:8000

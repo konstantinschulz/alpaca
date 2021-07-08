@@ -1,6 +1,9 @@
 # project folders
 .idea/
+.pytest_cache/
 .vscode/
+language_tool_python/
+spaCy/
 venv/
 
 # build files
