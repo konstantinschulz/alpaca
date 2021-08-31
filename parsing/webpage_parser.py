@@ -11,6 +11,7 @@ from bs4 import BeautifulSoup
 from newspaper import Article
 import nltk
 
+from config import Config
 from parsing.webpage_data import WebpageData
 
 logger = logging.getLogger("alpaca")
@@ -48,8 +49,7 @@ def word_tokenize(text: str) -> List[str]:
     tokens = words.findall(text)
 
     # fix abbreviated names (single upper-case letters + full stop)
-    nlp = spacy.load("en_core_web_sm")
-    doc = nlp(text)
+    doc = Config.NLP(text)
     entities = ["PERSON", "NORP", "FAC", "FACILITY", "ORG", "EVENT", "LAW"]
     names = set([ent.text for ent in doc.ents if ent.label_ in entities])
     for index, token in enumerate(tokens):

@@ -1,9 +1,13 @@
+Forked from: https://github.com/lvap/alpaca
 # Alpaca
 Content-focused webpage credibility evaluator
 
+## Build
+To build the Docker image, make sure that you installed all the Python packages from `requirements.txt` and copied `~/.cache/language_tool_python` to this repository's root directory. During the build process, the folder will be copied to the Docker image.
+
 ## Usage
 
-Example JSON paylod: {"type": "text", "params": null, "content": "The Food and Drug Administration on Thursday extended the expiration date on hundreds of thousands of doses of Johnson & Johnson\\'s COVID-19 vaccine that otherwise would have expired within the next month, requiring them to be discarded.", "mimeType": "text/plain", "features": null, "annotations": null}
+Example JSON payload: {"type": "text", "params": null, "content": "The Food and Drug Administration on Thursday extended the expiration date on hundreds of thousands of doses of Johnson & Johnson\\'s COVID-19 vaccine that otherwise would have expired within the next month, requiring them to be discarded.", "mimeType": "text/plain", "features": null, "annotations": null}
 
 Example URL: https://eu.usatoday.com/story/news/health/2021/06/10/j-j-covid-19-vaccine-expiring-doses-go-waste-coronavirus/7617895002/
 

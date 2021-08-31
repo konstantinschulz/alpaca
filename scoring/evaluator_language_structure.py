@@ -131,7 +131,7 @@ def evaluate_word_length_title(data: WebpageData) -> float:
     headline_clean = re.sub("[‹›’❮❯‚‘‛❛❜❟]", "'", data.headline)
     headline_tokens = word_tokenize(headline_clean)
 
-    word_length = sum(len(word) for word in headline_tokens) / len(headline_tokens)
+    word_length = sum(len(word) for word in headline_tokens) / max(len(headline_tokens), 1)
     logger.info("[Lang_structure] Word length title: " + str(word_length))
     test.add_result(data.url, "word_length_title", word_length)
 

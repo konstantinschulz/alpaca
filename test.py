@@ -1,5 +1,7 @@
 from typing import Any
 
+from tqdm import tqdm
+
 from config import Config
 import time
 import docker
@@ -20,7 +22,7 @@ class ElgTestCase(unittest.TestCase):
         request = TextRequest(content=ElgTestCase.content)
         service = CredibilityScoreService(Config.CREDIBILITY_SCORE_SERVICE)
         response = service.process_text(request)
-        self.assertEqual(response.classes[0].score, ElgTestCase.score)
+        self.assertEqual(response.classes[-1].score, ElgTestCase.score)
         self.assertEqual(type(response), ClassificationResponse)
 
     def test_docker(self):
@@ -38,14 +40,14 @@ class ElgTestCase(unittest.TestCase):
         cr: ClassificationResponse = response
         container.stop()
         container.remove()
-        self.assertEqual(cr.classes[0].score, ElgTestCase.score)
+        self.assertEqual(cr.classes[-1].score, ElgTestCase.score)
         self.assertEqual(type(response), ClassificationResponse)
 
     def test_elg_remote(self):
         service = Service.from_id(7348)
         response: Any = service(ElgTestCase.content)
         cr: ClassificationResponse = response
-        self.assertEqual(cr.classes[0].score, ElgTestCase.score)
+        self.assertEqual(cr.classes[-1].score, ElgTestCase.score)
         self.assertEqual(type(response), ClassificationResponse)
 
 

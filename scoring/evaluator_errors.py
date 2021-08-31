@@ -1,9 +1,6 @@
 import logging
 import re
-
-import language_tool_python as ltp
-import spacy
-
+from config import Config
 from testing import test
 from parsing.webpage_data import WebpageData
 from parsing.webpage_parser import has_ending_punctuation, word_tokenize
@@ -30,19 +27,17 @@ def evaluate_errors(data: WebpageData) -> float:
 
     # set up named entity recognition to avoid classifying names as spelling errors
     headline_ending = " " if has_ending_punctuation(data.headline) else ". " if data.headline else ""
-    nlp = spacy.load("en_core_web_sm")
-    doc = nlp(data.headline + headline_ending + data.text)
+    doc = Config.NLP(data.headline + headline_ending + data.text)
     entities = ["PERSON", "NORP", "FAC", "FACILITY", "ORG", "GPE", "LOC", "PRODUCT", "EVENT", "WORK_OF_ART", "LAW"]
     names = set([ent.text for ent in doc.ents if ent.label_ in entities])
     logger.debug("[Errors] {} recognised named entities: {}".format(len(names), names))
 
-    lang_tool = ltp.LanguageTool("en-US")
-    matches = lang_tool.check(data.headline)
+    matches = Config.LANG_TOOL.check(data.headline)
     matches_to_ignore = 0
     if matches and matches[len(matches) - 1].ruleId == "PUNCTUATION_PARAGRAPH_END":
         # ignore error for missing punctuation at title ending
         matches.pop()
-    matches += lang_tool.check(data.text)
+    matches += Config.LANG_TOOL.check(data.text)
 
     # filter out irrelevant matches and penalise errors only once
     unknown_words = []

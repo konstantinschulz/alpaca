@@ -1,4 +1,5 @@
 import re
+from typing import Dict
 
 import nltk
 from parsing.webpage_data import WebpageData
@@ -7,11 +8,10 @@ import logging
 from .credibility_evaluation import evaluation_signals
 from testing import test
 
-
 logger = logging.getLogger("alpaca")
 
 
-def evaluate_plaintext(text: str) -> float:
+def evaluate_plaintext(text: str) -> Dict[str, float]:
     """Scores a text's credibility by combining the credibility scores of different evaluators.
 
     Retrieves the signal sub-scores, validates the results and then generates an
@@ -33,6 +33,7 @@ def evaluate_plaintext(text: str) -> float:
     scores = {}
     weight_sum = 0
     final_score = 0
+    score_dict: Dict[str, float] = dict()
 
     # compute sub-scores and sum up overall score via linear combination
     # TODO possibly parellelise the signal evaluation calls to boost performance
@@ -40,7 +41,9 @@ def evaluate_plaintext(text: str) -> float:
         subscore = signal.evaluator(page_data)
         weight = signal.weight_func(subscore, page_data)
         scores[signal_name] = subscore
-        final_score += subscore * weight
+        weighted_subscore: float = subscore * weight
+        final_score += weighted_subscore
+        score_dict[signal_name] = subscore
         weight_sum += weight
         test.add_result(text, "score_" + signal_name, subscore)
 
@@ -48,12 +51,13 @@ def evaluate_plaintext(text: str) -> float:
     if not scores or len(scores) != len(evaluation_signals) or not all(0 <= score <= 1 for score in scores.values()):
         logger.error(
             "[Evaluation] Error computing sub-scores: {}".format(scores))
-        return -2
+        return dict()  # -2
 
     logger.info("[Evaluation] Individual sub-scores: {}".format(
         [signal_name + " {:.3f}".format(score) for signal_name, score in scores.items()]))
 
     final_score = final_score / weight_sum
+    score_dict["all"] = final_score
     logger.debug(
         "[Evaluation] Overall webpage score: {:.5f} for '{}'".format(final_score, text[:20]))
-    return final_score
+    return score_dict

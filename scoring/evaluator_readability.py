@@ -78,6 +78,8 @@ def evaluate_readability_title(data: WebpageData) -> float:
 
     # tokenize headline, removing punctuation that is problematic for nltk.tokenize
     tokenized_title = sent_tokenize(re.sub("[“‟„”«»❝❞⹂〝〞〟＂]", "\"", re.sub("[‹›’❮❯‚‘‛❛❜❟]", "'", data.headline)))
+    if len(tokenized_title) == 1 and not any(x.isalpha() for x in tokenized_title[0]):
+        return 0
     read_metrics = readability.getmeasures(tokenized_title, lang="en")
     paragraph_count = data.headline.count("\n") + 1
 

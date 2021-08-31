@@ -10,6 +10,7 @@ import spacy
 from spacytextblob.spacytextblob import SpacyTextBlob
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
+from config import Config
 from testing import test
 from parsing.webpage_data import WebpageData
 
@@ -36,9 +37,9 @@ def evaluate_polarity_text(data: WebpageData) -> float:
     # TODO decide on the better-performing sentiment analysis tool(s) as indicator of credibility
 
     # sentiment analysis with spacy
-    nlp = spacy.load('en_core_web_sm')
-    nlp.add_pipe("spacytextblob")
-    doc = nlp(data.text)
+    if not Config.NLP_TEXT_BLOB.has_pipe(SpacyTextBlob.__name__.lower()):
+        Config.NLP_TEXT_BLOB.add_pipe(SpacyTextBlob.__name__.lower())
+    doc = Config.NLP_TEXT_BLOB(data.text)
     polarity_spacy = doc._.polarity
 
     # sentiment analysis with vader
@@ -86,9 +87,9 @@ def evaluate_polarity_title(data: WebpageData) -> float:
     # TODO decide on the better-performing sentiment analysis tool(s) as indicator of credibility
 
     # sentiment analysis with spacy
-    nlp = spacy.load('en_core_web_sm')
-    nlp.add_pipe("spacytextblob")
-    doc = nlp(data.headline)
+    if not Config.NLP_TEXT_BLOB.has_pipe(SpacyTextBlob.__name__.lower()):
+        Config.NLP_TEXT_BLOB.add_pipe(SpacyTextBlob.__name__.lower())
+    doc = Config.NLP_TEXT_BLOB(data.headline)
     polarity_spacy = doc._.polarity
 
     # sentiment analysis with vader
@@ -129,9 +130,9 @@ def evaluate_subjectivity(data: WebpageData) -> float:
     :return: Value between 0 (very high webpage subjectivity) and 1 (very low webpage subjectivity).
     """
 
-    nlp = spacy.load('en_core_web_sm')
-    nlp.add_pipe("spacytextblob")
-    doc = nlp(data.text)
+    if not Config.NLP_TEXT_BLOB.has_pipe(SpacyTextBlob.__name__.lower()):
+        Config.NLP_TEXT_BLOB.add_pipe(SpacyTextBlob.__name__.lower())
+    doc = Config.NLP_TEXT_BLOB(data.text)
     subjectivity = doc._.subjectivity
 
     logger.debug("[Sentiment] Article subjectivity: {:.3f}".format(subjectivity))
