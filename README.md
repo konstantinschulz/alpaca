@@ -1,5 +1,7 @@
 Forked from: https://github.com/lvap/alpaca
 # Alpaca
+[![Documentation Status](https://readthedocs.org/projects/alpaca-credibility/badge/?version=latest)](https://alpaca-credibility.readthedocs.io/en/latest/?badge=latest)
+
 Content-focused webpage credibility evaluator
 
 ## Build

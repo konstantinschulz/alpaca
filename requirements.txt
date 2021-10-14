@@ -34,8 +34,11 @@ jusText==2.2.0
 language-tool-python==2.5.4
 loguru==0.5.3
 lxml==4.6.3
+markdown-it-py==1.1.0
 MarkupSafe==2.0.1
+mdit-py-plugins==0.2.8
 murmurhash==1.0.5
+myst-parser==0.15.2
 newspaper3k==0.2.8
 nltk==3.6.2
 numpy==1.21.0
