@@ -7,7 +7,7 @@ Welcome to alpaca's documentation!
 ==================================
 
 .. toctree::
-   README.md
+   credibility_signals.md
 
 Indices and tables
 ==================
