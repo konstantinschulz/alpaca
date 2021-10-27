@@ -1,7 +1,4 @@
 from typing import Any
-
-from tqdm import tqdm
-
 from config import Config
 import time
 import docker
